@@ -86,6 +86,22 @@ typealias Accumulator = ([NSLayoutConstraint], LayoutProxy)
     return distribute(by: amount, horizontally: [first] + rest)
 }
 
+/// Distributes multiple views horizontally. And makes them all the same width.
+///
+/// All views passed to this function will have
+/// their `translatesAutoresizingMaskIntoConstraints` properties set to `false`.
+///
+/// - parameter amount: The distance between the views.
+/// - parameter views:  The views to distribute.
+///
+/// - returns: An array of `NSLayoutConstraint` instances.
+///
+@discardableResult public func distributeEvenly(by amount: CGFloat, horizontally all: [LayoutProxy]) -> [NSLayoutConstraint] {
+    let spacing = reduce(all) { $0.trailing == $1.leading - amount }
+    let even = reduce(all) { $0.width == $1.width }
+    return spacing + even
+}
+
 /// Distributes multiple views horizontally from left to right.
 ///
 /// All views passed to this function will have
@@ -100,6 +116,22 @@ typealias Accumulator = ([NSLayoutConstraint], LayoutProxy)
     return distribute(by: amount, leftToRight: [first] + rest)
 }
 
+/// Distributes multiple views horizontally from left to right. And makes them all the same width.
+///
+/// All views passed to this function will have
+/// their `translatesAutoresizingMaskIntoConstraints` properties set to `false`.
+///
+/// - parameter amount: The distance between the views.
+/// - parameter views:  The views to distribute.
+///
+/// - returns: An array of `NSLayoutConstraint` instances.
+///
+@discardableResult public func distributeEvenly(by amount: CGFloat, leftToRight all: [LayoutProxy]) -> [NSLayoutConstraint] {
+    let spacing = reduce(all) { $0.right == $1.left - amount }
+    let even = reduce(all) { $0.width == $1.width }
+    return spacing + even
+}
+
 /// Distributes multiple views vertically.
 ///
 /// All views passed to this function will have
@@ -112,4 +144,20 @@ typealias Accumulator = ([NSLayoutConstraint], LayoutProxy)
 ///
 @discardableResult public func distribute(by amount: CGFloat = 0.0, vertically first: LayoutProxy, _ rest: LayoutProxy...) -> [NSLayoutConstraint] {
     return distribute(by: amount, vertically: [first] + rest)
+}
+
+/// Distributes multiple views vertically. And makes them all the same height
+///
+/// All views passed to this function will have
+/// their `translatesAutoresizingMaskIntoConstraints` properties set to `false`.
+///
+/// - parameter amount: The distance between the views.
+/// - parameter views:  The views to distribute.
+///
+/// - returns: An array of `NSLayoutConstraint` instances.
+///
+@discardableResult public func distributeEvenly(by amount: CGFloat, vertically all: [LayoutProxy]) -> [NSLayoutConstraint] {
+    let spacing = reduce(all) { $0.bottom == $1.top - amount }
+    let even = reduce(all) { $0.height == $1.height }
+    return spacing + even
 }
