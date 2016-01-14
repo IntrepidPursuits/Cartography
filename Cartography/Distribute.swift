@@ -48,7 +48,7 @@ public func distribute(by amount: CGFloat, horizontally first: LayoutProxy, _ re
 ///
 /// - returns: An array of `NSLayoutConstraint` instances.
 ///
-public func distribute(by amount: CGFloat, var leftToRight all: [LayoutProxy]) -> [NSLayoutConstraint] {
+public func distribute(by amount: CGFloat, var horizontally all: [LayoutProxy]) -> [NSLayoutConstraint] {
     let first = all.first!
     all.removeAtIndex(all.startIndex)
     let spacing = reduce(first, rest: all) { $0.trailing == $1.leading - amount }
