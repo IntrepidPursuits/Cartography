@@ -48,11 +48,12 @@ public func distribute(by amount: CGFloat, horizontally first: LayoutProxy, _ re
 ///
 /// - returns: An array of `NSLayoutConstraint` instances.
 ///
-public func distributeEvenly(by amount: CGFloat, var horizontally all: [LayoutProxy]) -> [NSLayoutConstraint] {
+public func distributeEvenly(by amount: CGFloat, horizontally all: [LayoutProxy]) -> [NSLayoutConstraint] {
+    var rest = all
+    rest.removeAtIndex(rest.startIndex)
     let first = all.first!
-    all.removeAtIndex(all.startIndex)
-    let spacing = reduce(first, rest: all) { $0.trailing == $1.leading - amount }
-    let even = reduce(first, rest: all) { $0.width == $1.width }
+    let spacing = reduce(first, rest: rest) { $0.trailing == $1.leading - amount }
+    let even = reduce(first, rest: rest) { $0.width == $1.width }
     return spacing + even
 }
 
@@ -80,11 +81,12 @@ public func distribute(by amount: CGFloat, leftToRight first: LayoutProxy, _ res
 ///
 /// - returns: An array of `NSLayoutConstraint` instances.
 ///
-public func distributeEvenly(by amount: CGFloat, var leftToRight all: [LayoutProxy]) -> [NSLayoutConstraint] {
+public func distributeEvenly(by amount: CGFloat, leftToRight all: [LayoutProxy]) -> [NSLayoutConstraint] {
+    var rest = all
+    rest.removeAtIndex(rest.startIndex)
     let first = all.first!
-    all.removeAtIndex(all.startIndex)
-    let spacing = reduce(first, rest: all) { $0.right == $1.left - amount }
-    let even = reduce(first, rest: all) { $0.width == $1.width }
+    let spacing = reduce(first, rest: rest) { $0.right == $1.left - amount }
+    let even = reduce(first, rest: rest) { $0.width == $1.width }
     return spacing + even
 }
 
@@ -112,10 +114,11 @@ public func distribute(by amount: CGFloat, vertically first: LayoutProxy, _ rest
 ///
 /// - returns: An array of `NSLayoutConstraint` instances.
 ///
-public func distributeEvenly(by amount: CGFloat, var vertically all: [LayoutProxy]) -> [NSLayoutConstraint] {
+public func distributeEvenly(by amount: CGFloat, vertically all: [LayoutProxy]) -> [NSLayoutConstraint] {
+    var rest = all
+    rest.removeAtIndex(rest.startIndex)
     let first = all.first!
-    all.removeAtIndex(all.startIndex)
-    let spacing = reduce(first, rest: all) { $0.bottom == $1.top - amount }
-    let even = reduce(first, rest: all) { $0.height == $1.height }
+    let spacing = reduce(first, rest: rest) { $0.bottom == $1.top - amount }
+    let even = reduce(first, rest: rest) { $0.height == $1.height }
     return spacing + even
 }
