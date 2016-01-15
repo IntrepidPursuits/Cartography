@@ -51,7 +51,7 @@ public func distribute(by amount: CGFloat, horizontally first: LayoutProxy, _ re
 public func distributeEvenly(by amount: CGFloat, horizontally all: [LayoutProxy]) -> [NSLayoutConstraint] {
     var rest = all
     rest.removeAtIndex(rest.startIndex)
-    let first = all.first!
+    guard let first = all.first else { fatalError("You need at least one LayoutProxy in the array") }
     let spacing = reduce(first, rest: rest) { $0.trailing == $1.leading - amount }
     let even = reduce(first, rest: rest) { $0.width == $1.width }
     return spacing + even
@@ -84,7 +84,7 @@ public func distribute(by amount: CGFloat, leftToRight first: LayoutProxy, _ res
 public func distributeEvenly(by amount: CGFloat, leftToRight all: [LayoutProxy]) -> [NSLayoutConstraint] {
     var rest = all
     rest.removeAtIndex(rest.startIndex)
-    let first = all.first!
+    guard let first = all.first else { fatalError("You need at least one LayoutProxy in the array") }
     let spacing = reduce(first, rest: rest) { $0.right == $1.left - amount }
     let even = reduce(first, rest: rest) { $0.width == $1.width }
     return spacing + even
@@ -117,7 +117,7 @@ public func distribute(by amount: CGFloat, vertically first: LayoutProxy, _ rest
 public func distributeEvenly(by amount: CGFloat, vertically all: [LayoutProxy]) -> [NSLayoutConstraint] {
     var rest = all
     rest.removeAtIndex(rest.startIndex)
-    let first = all.first!
+    guard let first = all.first else { fatalError("You need at least one LayoutProxy in the array") }
     let spacing = reduce(first, rest: rest) { $0.bottom == $1.top - amount }
     let even = reduce(first, rest: rest) { $0.height == $1.height }
     return spacing + even
